@@ -106,7 +106,7 @@ select * from temp_table where rank_sal=1;
 ## select instr('ravi ravi','i',1,2) from dual; --character to search for, start searching from index, which occurence
 ## select instr('ravi ravi','i',-1,2) from dual; --start searching form the right to left, however position is calculated right to left
 # ## select first_name,instr(first_name,'a') from employees; --case sensitive so in Adam it returns 3 and not one.
-## # --trim
+# --trim
 ## select trim(' My name is ravi ') as name from dual; --removes only leading and trailing spaces and not in between
 ## select trim(leading ' ' from ' My name is ravi   ')as name from dual; --removes leading spaces
 ## select trim(trailing ' ' from ' My name is ravi ')as name from dual; --removes trailing spaces
