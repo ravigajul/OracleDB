@@ -217,3 +217,33 @@
 # --COALESCE (improved version of nvl).Accepts the list of expressions and returns the first one that evaluated to not null
      select coalesce(commission_pct,manager_id,department_id) from employees;
      select * from employees where manager_id is null;
+# --Group functions .All group functions ignore the null values
+    select avg(salary) from employees;
+    select max(salary) from employees;
+    select min(salary) from employees;
+    select sum(salary) from employees;
+    select count(salary) from employees;
+    select LISTAGG(last_name, '; ') WITHIN GROUP (ORDER BY hire_date desc) "lastnames" from employees;
+    select * from employees order by hire_date desc;
+
+    --grouping functions
+    select department_id,round(avg(salary)) from employees group by department_id order by department_id asc;
+    select department_id,count(*) from employees group by department_id having count(*)>5 order by count(*) desc;
+
+    --grouping ...numnber of employees joined by year and month
+    select extract(year from hire_Date) year,extract(month from hire_Date) month,count(*) cnt from employees group by extract(year from hire_date),extract(month from       hire_Date) order by year,month;
+
+# --REGEXP_LIKE --first name starting and ending with vowels
+    select distinct first_name from employees where REGEXP_LIKE(LOWER(first_name), '^[aeiou].*[aeiou]$');
+    --first name starting with vowels using substring
+    select distinct first_name from employees where SUBSTR(first_name,1,1) in ('A','E','I','O','U');
+
+    --first name not starting with vowel
+    select distinct first_name from employees where  REGEXP_LIKE(LOWER(first_name), '^[^aeiou].*');
+
+    --Query the Name of any student in STUDENTS who scored higher than  Marks.
+    --Order your output by the last three characters of each name. 
+    --If two or more students both have names ending in the same last three characters (i.e.: Bobby, Robby, etc.), 
+    --secondary sort them by ascending ID.
+    select  name from students where marks>75 order by substr(name,-3),id asc;
+
