@@ -248,3 +248,8 @@
     select  name from students where marks>75 order by substr(name,-3),id asc;
 # Inner join
     select col1, col2 from table1 inner join table2 on (joining condition) / using (column name)
+# Difference between ON and USING
+    we can compare any column with any other column with 'ON' while using can only compare the columsn with same names in both the tables. When using 'using' the common    column names cannot have aliases.See the second query below
+    select e.first_name,e.last_name,d.department_id,e.manager_id from employees e inner join departments d on (e.department_id=d.department_id and e.employee_id=d.manager_id);
+   
+    select e.first_name,e.last_name,department_id,manager_id from employees e inner join departments d using (department_id ,manager_id);
