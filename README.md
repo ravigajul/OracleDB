@@ -247,4 +247,4 @@
     --secondary sort them by ascending ID.
     select  name from students where marks>75 order by substr(name,-3),id asc;
 # Inner join
-    select col1, col2 from table1 inner join table2 on (joining condition) using (column name)
+    select col1, col2 from table1 inner join table2 on (joining condition) / using (column name)
