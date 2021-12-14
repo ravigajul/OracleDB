@@ -263,3 +263,7 @@
     6. Employee/Employees who were hired recently.
 # Multiple Row Sub Queries
     The inner query returns multiple rows. The main query will use the following operators IN, ANY, ALL
+    =ANY is equal to one of the element
+    >ANY means more than the minimum
+    <ANY means less than the maximum
+    1. Employees whose salary is any of above than the sales manager (SA_MAN)
