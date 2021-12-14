@@ -267,6 +267,14 @@
     >ANY means more than the minimum
     <ANY means less than the maximum
     1. Employees whose salary is any of above than the sales manager (SA_MAN)
+    --find the employees with min salary in each department
+    select * from employees where salary in (
+    select min(salary) from employees group by department_id);
+
+    --find the employees whose salary is more than any of the sales managers
+    select * from employees where salary > ANY (select salary from employees where job_id='SA_MAN');
+    --find the employees whose salary is less than all of the sales managers
+    select * from employees where salary < ALL (select salary from employees where job_id='SA_MAN');
 # Multiple Column Sub Queries
     The inner query returns more than one column to the outer query used with IN or NOT IN 
 ## Non Pairwise comparison Subquery
