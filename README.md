@@ -267,3 +267,5 @@
     >ANY means more than the minimum
     <ANY means less than the maximum
     1. Employees whose salary is any of above than the sales manager (SA_MAN)
+# Multiple Column Sub Queries
+    The inner query returns more than one column to the outer query used with IN or NOT IN 
