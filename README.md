@@ -297,3 +297,8 @@
     --Find all managers from employees table
     select employee_id, first_name,last_name from employees e where exists 
     (select 'X' from employees b where b.manager_id=e.employee_id);
+    
+ ## --Not exists operator
+    --find the department where there are no employees
+    select * from departments d where not exists (
+    select 'X' from employees e where e.department_id=d.department_id);
