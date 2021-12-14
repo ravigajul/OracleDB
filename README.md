@@ -253,3 +253,7 @@
     select e.first_name,e.last_name,d.department_id,e.manager_id from employees e inner join departments d on (e.department_id=d.department_id and e.employee_id=d.manager_id);
    
     select e.first_name,e.last_name,department_id,manager_id from employees e inner join departments d using (department_id ,manager_id);
+# Single Row Sub Queries
+    The inner query returns a single row. The main query can use the following single row operators = >= <= <> 
+# Multiple Row Sub Queries
+    The inner query returns multiple rows. The main query will use the following operators IN, ANY, ALL
