@@ -268,3 +268,27 @@ select * from employees where hire_date = (select min(hire_date) from employees)
 
 --Find the employee who was hired recently
 select * from employees where hire_date = (select max(hire_date) from employees);
+
+--Multiple Row Functions
+--find the employees with min salary in each department
+select * from employees where salary in (
+select min(salary) from employees group by department_id);
+
+--find the employees whose salary is more than any of the sales managers
+select * from employees where salary > ANY (select salary from employees where job_id='SA_MAN');
+--find the employees whose salary is less than all of the sales managers
+select * from employees where salary < ALL (select salary from employees where job_id='SA_MAN');
+
+--Multiple column sub queries
+---non pair wise comparison subquery
+select * from employees 
+where 
+department_id in 
+    (select department_id from employees where department_id in (110,80,70))
+and salary in 
+(select salary from employees where department_id in(110,80,70));
+
+--Pair wise comparison subquery
+select * from employees 
+where (department_id,salary) in 
+    (select department_id,salary from employees where department_id in (110,80,70));
