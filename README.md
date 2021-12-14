@@ -292,3 +292,8 @@
     select * from employees a where salary = (select max(salary) from employees b where b.department_id=a.department_id);
  # Correlated Sub Queries
     When a subquery references to columns from the parent query, it is called correlated sub query.
+    
+ ## Exists Operator
+    --Find all managers from employees table
+    select employee_id, first_name,last_name from employees e where exists 
+    (select 'X' from employees b where b.manager_id=e.employee_id);
