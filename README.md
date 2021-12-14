@@ -255,5 +255,11 @@
     select e.first_name,e.last_name,department_id,manager_id from employees e inner join departments d using (department_id ,manager_id);
 # Single Row Sub Queries
     The inner query returns a single row. The main query can use the following single row operators = >= <= <> 
+    1. All employees who joined after John
+    2. All employees whose salary is > John
+    3. All employees who work in same dept as that of John
+    4. All employees whoe work in same dept as that of john and who earn less than him
+    5. Employee who was hired firt
+    6. Employee/Employees who were hired recently.
 # Multiple Row Sub Queries
     The inner query returns multiple rows. The main query will use the following operators IN, ANY, ALL
