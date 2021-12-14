@@ -269,3 +269,13 @@
     1. Employees whose salary is any of above than the sales manager (SA_MAN)
 # Multiple Column Sub Queries
     The inner query returns more than one column to the outer query used with IN or NOT IN 
+## Non Pairwise comparison Subquery
+    select * from employees where 
+     department_id in 
+    (select department_id from employees where department_id in (110,80,70))
+     and salary in 
+    (select salary from employees where department_id in(110,80,70));
+## Paurwise comparison subquery
+    select * from employees 
+    where (department_id,salary) in 
+    (select department_id,salary from employees where department_id in (110,80,70));
