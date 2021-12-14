@@ -280,7 +280,7 @@
     where (department_id,salary) in 
     (select department_id,salary from employees where department_id in (110,80,70));
 
-## non pair wise is the solution to below problem
+## Non pair wise is the solution to below problem
   --pairwise max salary in each department
 select * from employees where (department_id,salary) in (select department_id,max(salary) from employees group by department_id);
 
