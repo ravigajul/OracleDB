@@ -287,6 +287,8 @@
     --non pairwise max salary in each department...this doesn't show the right out put sine many rows with same department_id is shown
     select * from employees where department_id in (select department_id from employees group by department_id)
     and salary in (select max(salary) from employees group by department_id);
-    
+## Alternate solution to above problem using correlated subquery
+    --alternate solution for above problem using correlated subquery
+    select * from employees a where salary = (select max(salary) from employees b where b.department_id=a.department_id);
  # Correlated Sub Queries
     When a subquery references to columns from the parent query, it is called correlated sub query.
