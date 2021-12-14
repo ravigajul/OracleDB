@@ -281,9 +281,9 @@
     (select department_id,salary from employees where department_id in (110,80,70));
 
 ## Non pair wise is the solution to below problem
-  --pairwise max salary in each department
+    --pairwise max salary in each department
     select * from employees where (department_id,salary) in (select department_id,max(salary) from employees group by department_id);
 
-  --non pari wise max salary in each department...this doesn't show the right out put sine many rows with same department_id is shown
+    --non pari wise max salary in each department...this doesn't show the right out put sine many rows with same department_id is shown
     select * from employees where department_id in (select department_id from employees group by department_id)
     and salary in (select max(salary) from employees group by department_id);
