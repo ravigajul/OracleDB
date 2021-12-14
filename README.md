@@ -275,7 +275,7 @@
     (select department_id from employees where department_id in (110,80,70))
      and salary in 
     (select salary from employees where department_id in(110,80,70));
-## Paurwise comparison subquery
+## Pairwise comparison subquery
     select * from employees 
     where (department_id,salary) in 
     (select department_id,salary from employees where department_id in (110,80,70));
