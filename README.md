@@ -1,4 +1,11 @@
 # OracleDB Example Queries
+## Script to unlock hr schema
+    sqlplus / as sysdba;
+    alter session set container=orclpdb;
+    alter pluggable database open;
+    alter pluggable database orclpdb save state;
+    alter user hr identified by hr account unlock;
+    /
 # --CONCACTENATION
     select * from employees;
     select First_name || ',' || last_name as full_name from employees; 
