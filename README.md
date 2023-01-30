@@ -1,4 +1,6 @@
 # OracleDB Example Queries
+## Oracle Official site to download Oracle DB
+https://www.oracle.com/database/technologies/oracle-database-software-downloads.html
 ## Script to unlock hr schema
     sqlplus / as sysdba;
     alter session set container=orclpdb;
