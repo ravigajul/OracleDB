@@ -8,6 +8,11 @@ https://www.oracle.com/database/technologies/oracle-database-software-downloads.
     alter pluggable database orclpdb save state;
     alter user hr identified by hr account unlock;
     /
+## Create User and Grant access
+    CONNECT SYS AS SYSDBA;
+    alter session set "_ORACLE_SCRIPT"=true;
+    CREATE USER ravi IDENTIFIED BY openspan;
+    GRANT CREATE SESSION, CREATE PROCEDURE TO ravi;
 ## --CONCACTENATION
     select * from employees;
     select First_name || ',' || last_name as full_name from employees; 
