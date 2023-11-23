@@ -325,3 +325,54 @@ https://www.oracle.com/database/technologies/oracle-database-software-downloads.
     --find the department where there are no employees
     select * from departments d where not exists (
     select 'X' from employees e where e.department_id=d.department_id);
+## Dynamic query to loop through table PL/SQL Block
+```sql
+DECLARE
+  v_table_name VARCHAR2(50);
+  v_first_name employees.first_name%TYPE;
+  v_employee_id employees.employee_id%TYPE;
+
+  -- Define a nested table type to store employee_ids
+  TYPE EmployeeIdList IS TABLE OF employees.employee_id%TYPE;
+
+  -- Declare a variable of the nested table type
+  v_employee_ids EmployeeIdList := EmployeeIdList(100, 101, 102); -- Add any employee_ids here
+
+  TYPE DynamicCursor IS REF CURSOR;
+  c_subtbl_cursor DynamicCursor;
+
+BEGIN
+  dbms_output.put_line('------------------------------------');
+
+  FOR c_subtbl IN (
+    SELECT table_name
+    FROM all_tab_columns
+    WHERE column_name IN ('FIRST_NAME', 'EMPLOYEE_ID')
+      AND table_name <> 'EMPLOYEES'
+      AND owner = 'HR'
+    GROUP BY table_name
+    HAVING COUNT(column_name) = 2
+  ) LOOP
+    v_table_name := c_subtbl.table_name;
+    dbms_output.put_line(v_table_name);
+
+    -- Use dynamic SQL to open a cursor for the SELECT statement
+    OPEN c_subtbl_cursor FOR
+      'SELECT first_name, employee_id FROM ' || v_table_name ||
+      ' WHERE employee_id IN (' || v_employee_ids(1) || ',' || v_employee_ids(2) || ',' || v_employee_ids(3) || ')';
+
+    -- Fetch results from the cursor
+    LOOP
+      FETCH c_subtbl_cursor INTO v_first_name, v_employee_id;
+      EXIT WHEN c_subtbl_cursor%NOTFOUND;
+
+      -- Process the fetched data
+      dbms_output.put_line(v_first_name || ' ' || v_employee_id);
+    END LOOP;
+
+    -- Close the cursor
+    CLOSE c_subtbl_cursor;
+  END LOOP;
+END;
+/
+```
