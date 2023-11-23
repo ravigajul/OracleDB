@@ -376,3 +376,69 @@ BEGIN
 END;
 /
 ```
+When you want to handle the employee_ids dynamically. User enter many employee_ids not just 3
+```sql
+DECLARE
+  v_table_name VARCHAR2(50);
+  v_first_name employees.first_name%TYPE;
+  v_employee_id employees.employee_id%TYPE;
+
+  -- Define a nested table type to store employee_ids
+  TYPE EmployeeIdList IS TABLE OF employees.employee_id%TYPE;
+
+  -- Declare a variable of the nested table type
+  v_employee_ids EmployeeIdList := EmployeeIdList(100, 101, 102, 103, 104, 105, 106, 107, 108, 109); -- Add any 10 employee_ids here
+
+  TYPE DynamicCursor IS REF CURSOR;
+  c_subtbl_cursor DynamicCursor;
+
+  -- Declare a variable to hold the dynamic SQL statement
+  v_sql VARCHAR2(4000);
+
+BEGIN
+  dbms_output.put_line('------------------------------------');
+
+  FOR c_subtbl IN (
+    SELECT table_name
+    FROM all_tab_columns
+    WHERE column_name IN ('FIRST_NAME', 'EMPLOYEE_ID')
+      AND table_name <> 'EMPLOYEES'
+      AND owner = 'HR'
+    GROUP BY table_name
+    HAVING COUNT(column_name) = 2
+  ) LOOP
+    v_table_name := c_subtbl.table_name;
+    dbms_output.put_line(v_table_name);
+
+    -- Build the dynamic SQL statement with the IN clause
+    v_sql := 'SELECT first_name, employee_id FROM ' || v_table_name ||
+             ' WHERE employee_id IN (';
+
+    -- Loop to concatenate employee IDs into the IN clause
+    FOR i IN 1..v_employee_ids.COUNT LOOP
+      v_sql := v_sql || v_employee_ids(i);
+      IF i < v_employee_ids.COUNT THEN
+        v_sql := v_sql || ', ';
+      END IF;
+    END LOOP;
+
+    v_sql := v_sql || ')';
+
+    -- Use dynamic SQL to open a cursor for the SELECT statement
+    OPEN c_subtbl_cursor FOR v_sql;
+
+    -- Fetch results from the cursor
+    LOOP
+      FETCH c_subtbl_cursor INTO v_first_name, v_employee_id;
+      EXIT WHEN c_subtbl_cursor%NOTFOUND;
+
+      -- Process the fetched data
+      dbms_output.put_line(v_first_name || ' ' || v_employee_id);
+    END LOOP;
+
+    -- Close the cursor
+    CLOSE c_subtbl_cursor;
+  END LOOP;
+END;
+/
+```
