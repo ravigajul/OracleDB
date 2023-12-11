@@ -442,3 +442,15 @@ BEGIN
 END;
 /
 ```
+## Performance Tuning
+### Find out employees who doesn't have a department
+The first approach using exists subquery. This took 0.003 seconds
+```sql
+select employee_id,first_name,last_name from employees e where not exists(
+select 'x' from departments d where e.department_id=d.department_id);
+```
+The second approach and optimal way from performance stand point using left join. This took 0.001 seconds
+```sql
+select employee_id,first_name,last_name,department_id,department_name from employees
+left join departments using (department_id) where department_id is null;
+```
