@@ -454,3 +454,43 @@ The second approach and optimal way from performance stand point using left join
 select employee_id,first_name,last_name,department_id,department_name from employees
 left join departments using (department_id) where department_id is null;
 ```
+
+## Query to import data to lucid charts for ERD
+```sql
+SELECT distinct 
+'sqlserver' as "DBMS",
+'master' as "TABLE_CATALOG",
+"SCHEMA_NAME" as "TABLE_SCHEMA"
+,"TABLE_NAME"
+,"COLUMN_NAME"
+,"POSITION" as "ORDINAL_POSITION"
+, "DATA_TYPE_NAME" as "DATA_TYPE"
+,"LENGTH" as "CHARACTER_MAXIMUM_LENGTH"
+,case WHEN "INDEX_TYPE" = 'FULL' then 'PRIMARY KEY' else '' end as "CONSTRAINT_TYPE"
+,'' as "TABLE_SCHEMA"
+,'' as "TABLE_NAME_1"
+,'' as "COLUMN_NAME" 
+FROM TABLE_COLUMNS a 
+WHERE ( SCHEMA_NAME='GENERIC_SCHEMA'  and TABLE_NAME='TABLE_1'   )  
+or  ( SCHEMA_NAME='GENERIC_SCHEMA'  and TABLE_NAME='TABLE_2'   ) 
+or  ( SCHEMA_NAME='GENERIC_SCHEMA'  and TABLE_NAME='TABLE_3'   ) 
+or  ( SCHEMA_NAME='GENERIC_SCHEMA'  and TABLE_NAME='TABLE_4'   ) 
+or  ( SCHEMA_NAME='GENERIC_SCHEMA'  and TABLE_NAME='TABLE_5'   ) 
+or  ( SCHEMA_NAME='GENERIC_SCHEMA'  and TABLE_NAME='TABLE_6'   ) 
+or  ( SCHEMA_NAME='GENERIC_SCHEMA'  and TABLE_NAME='TABLE_7'   ) 
+or  ( SCHEMA_NAME='GENERIC_SCHEMA'  and TABLE_NAME='TABLE_8'   ) 
+or  ( SCHEMA_NAME='GENERIC_SCHEMA'  and TABLE_NAME='TABLE_9'   ) 
+or  ( SCHEMA_NAME='GENERIC_SCHEMA'  and TABLE_NAME='TABLE_10'   ) 
+or  ( SCHEMA_NAME='GENERIC_SCHEMA'  and TABLE_NAME='TABLE_11'   )
+or  ( SCHEMA_NAME='GENERIC_SCHEMA'  and TABLE_NAME='TABLE_12'   ) 
+or  ( SCHEMA_NAME='GENERIC_SCHEMA'  and TABLE_NAME='TABLE_13'   ) 
+or  ( SCHEMA_NAME='GENERIC_SCHEMA'  and TABLE_NAME='TABLE_14'   ) 
+or  ( SCHEMA_NAME='GENERIC_SCHEMA'  and TABLE_NAME='TABLE_15'   ) 
+or  ( SCHEMA_NAME='GENERIC_SCHEMA'  and TABLE_NAME='TABLE_16'   ) 
+or  ( SCHEMA_NAME='GENERIC_SCHEMA'  and TABLE_NAME='TABLE_17'   )  
+ORDER BY  "SCHEMA_NAME", "TABLE_NAME",  POSITION 
+LIMIT 1000 OFFSET 0;
+-- LIMIT 1000 OFFSET 1000;
+-- LIMIT 1000 OFFSET 2000;
+-- LIMIT 1000 OFFSET 3000;
+```
